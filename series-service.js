@@ -24,3 +24,27 @@ export const getCreatorsFrom = (series, country) =>
     .map(show => show.creator.name);
 
 export const sortByStartYear = series => [...series].sort((a, b) => a.startYear - b.startYear);
+
+// Part C: updates without changing the original
+
+export const renameSeries = (series, id, newTitle) =>
+  series.map(show => (show.id === id ? { ...show, title: newTitle } : show));
+
+export const addSeason = (series, showId, season) =>
+  series.map(show =>
+    show.id === showId ? { ...show, seasons: [...show.seasons, season] } : show
+  );
+
+export const addEpisode = (series, showId, seasonNumber, episode) =>
+  series.map(show =>
+    show.id === showId
+      ? {
+          ...show,
+          seasons: show.seasons.map(season =>
+            season.number === seasonNumber
+              ? { ...season, episodes: [...season.episodes, episode] }
+              : season
+          ),
+        }
+      : show
+  );
